@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #box {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            height: 50px;
+            width: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+</body>
+
+</html>
+<script>
+    var x = 100
+    var y = 100
+    var direction = -10
+    document.getElementById("box").addEventListener("click", moveBox)
+    setInterval(moveBox, 60)
+    function moveBox() {
+        document.getElementById("box").style.left = x + "px"
+        document.getElementById("box").style.top = y + "px"
+        x = x + direction
+        y = y + direction
+        if (x < 0) {
+            direction = 10
+        }
+
+        if (y < 0) {
+            direction = 10
+        }
+    }
+
+
+</script>

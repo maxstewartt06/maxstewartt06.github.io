@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Animation</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="300"></canvas>
+    <img src="Piskel(2).png" id="stick">
+</body>
+
+<script>
+
+    var canvas = document.getElementById("canvas")
+    var ctx = canvas.getContext("2d")
+    var img = document.getElementById("stick")
+
+    var x = 1
+    var y = 1
+    var directionX = 5
+    var directionY = 5
+
+    setInterval(main, 15)
+
+    function main() {
+        ctx.clearRect(0, 0, 2000, 2000)
+        ctx.drawImage(img, 100, 100, 100, 100, 100, 100, 600, 300)
+        ctx.drawImage(img, 100, 100, 100, 100, 100, 100, 600, 300)
+        x = x + directionX
+        y = y + directionY
+
+        if (x > 600) {
+            directionX = -directionX
+        }
+
+        if (x < 0) {
+            directionX = -directionX
+        }
+
+        if (y > 400) {
+            directionY = -directionY
+        }
+
+        if (y < 0) {
+            directionY = -directionY
+        }
+    }
+
+</script>
+
+</html>

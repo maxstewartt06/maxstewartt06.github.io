@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+</body>
+
+</html>
+<script>
+    var canvas = document.getElementById("canvas")
+    var ctx = canvas.getContext("2d")
+    var posx = [1, 2, 3, 4, 5,6,7,8,9,10]
+    var posy = [1, 2, 3, 4, 5,6,7,8,9,10]
+    var boxnum = 100
+    var speedx = [1, 2, 3, 4, 5,6,7,8,9,10]
+    var speedy = [1, 2, 3, 4, 5,6,7,8,9,10]
+    setInterval(main, 1)
+    function main() {
+        ctx.clearRect(0, 0, 2000, 2000)
+        for (var i = 0; i < boxnum; i = i + 1) {
+            ctx.fillRect(posx[i], posy[i], 100, 100)
+            posx[i] = posx[i] + speedx[i]
+            posy[i] = posy[i] + speedy[i]
+            if (posx[i] > 800) {
+                speedx[i] = speedx[i] * -1
+            }
+            if (posx[i] <= 0) {
+                speedx[i] = speedx[i] * -1
+            }
+            if (posy[i] <= 0) {
+                speedy[i] = speedy[i] * -1
+            }
+            if (posy[i] > 800) {
+                speedy[i] = speedy[i] * -1
+            }
+        }
+
+    }
+</script>

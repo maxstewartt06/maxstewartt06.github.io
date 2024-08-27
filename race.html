@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <style>
+        #car {
+            position: absolute;
+            left: 100px;
+            top: 100px;
+            height: 100px;
+            width: 100px;
+        }
+
+        #carDos {
+            position: absolute;
+            left: 100px;
+            top: 360px;
+            height: 100px;
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="car" src="https://www.whitehouse.gov/wp-content/uploads/2021/01/44_barack_obama.jpg">
+    <img id="carDos"
+        src="https://www.usmint.gov/wordpress/wp-content/uploads/2022/12/2023-lincoln-penny-uncirculated-obverse-philadelphia.jpg">
+
+
+</html>
+<script>
+    var carX = 100
+    var carXdos = 100
+    var direction = 35
+    document.addEventListener("keydown", moveCar)
+    function moveCar(e) {
+        console.log(e.key)
+        if ("w" === e.key) {
+            document.getElementById("car").style.left = carX + "px"
+            carX = carX + direction
+        }
+        if ("s" === e.key) {
+            document.getElementById("carDos").style.left = carXdos + "px"
+            carXdos = carXdos + direction
+        }
+
+    }
+</script>
