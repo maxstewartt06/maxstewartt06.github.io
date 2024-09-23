@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        canvas {
+            background: black;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pong" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById("pong");
+        const context = canvas.getContext("2d");
+
+        // Ball settings
+        const ballRadius = 10;
+        let ballX = canvas.width / 2;
+        let ballY = canvas.height / 2;
+        let ballDX = 5; // Change in X
+        let ballDY = 5; // Change in Y
+
+        // Paddle settings
+        const paddleWidth = 10;
+        const paddleHeight = 100;
+        let player1Y = (canvas.height - paddleHeight) / 2;
+        let player2Y = (canvas.height - paddleHeight) / 2;
+
+        // Control settings
+        const player1UpKey = "w";
+        const player1DownKey = "s";
+        const player2UpKey = "ArrowUp";
+        const player2DownKey = "ArrowDown";
+
+        // Key states
+        const keys = {};
+
+        window.addEventListener("keydown", (event) => {
+            keys[event.key] = true;
+        });
+
+        window.addEventListener("keyup", (event) => {
+            keys[event.key] = false;
+        });
+
+        function draw() {
+            // Clear the canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw paddles
+            context.fillStyle = "white";
+            context.fillRect(0, player1Y, paddleWidth, paddleHeight);
+            context.fillRect(canvas.width - paddleWidth, player2Y, paddleWidth, paddleHeight);
+
+            // Draw ball
+            context.beginPath();
+            context.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
+            context.fill();
+
+            // Move paddles
+            if (keys[player1UpKey] && player1Y > 0) {
+                player1Y -= 10;
+            }
+            if (keys[player1DownKey] && player1Y < canvas.height - paddleHeight) {
+                player1Y += 10;
+            }
+            if (keys[player2UpKey] && player2Y > 0) {
+                player2Y -= 10;
+            }
+            if (keys[player2DownKey] && player2Y < canvas.height - paddleHeight) {
+                player2Y += 10;
+            }
+
+            // Move ball
+            ballX += ballDX;
+            ballY += ballDY;
+
+            // Ball collision with top and bottom
+            if (ballY + ballRadius > canvas.height || ballY - ballRadius < 0) {
+                ballDY = -ballDY;
+            }
+
+            // Ball collision with paddles
+            if (
+                (ballX - ballRadius < paddleWidth && ballY > player1Y && ballY < player1Y + paddleHeight) ||
+                (ballX + ballRadius > canvas.width - paddleWidth && ballY > player2Y && ballY < player2Y + paddleHeight)
+            ) {
+                ballDX = -ballDX;
+            }
+
+            // Reset ball if it goes off screen
+            if (ballX + ballRadius < 0 || ballX - ballRadius > canvas.width) {
+                ballX = canvas.width / 2;
+                ballY = canvas.height / 2;
+                ballDX = -ballDX; // Change direction
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
