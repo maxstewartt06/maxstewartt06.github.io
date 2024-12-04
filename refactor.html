@@ -1,0 +1,31 @@
+<html>
+<head>
+
+</head>
+<body>
+
+</body>    
+</html>
+
+
+
+<script>
+getLoanDetails(10000, 5);
+
+function getLoanDetails(principal, years) {
+    var interestRate;
+    if (years > 10) {
+        interestRate = 0.05;
+    } else if (years > 5) {
+        interestRate = 0.04;
+    } else {
+        interestRate = 0.03;
+    }
+    
+    var interest = principal * interestRate * years;
+    
+    return principal + interest
+}
+
+
+</script>
