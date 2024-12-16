@@ -52,11 +52,11 @@ function runProgram() {
   */
   function handleKeyDown(event) {
     if (event.which === KEY.LEFT) {
-      walker.speedX = -.1;
+      walker.speedX = -10;
     } else if (event.which === KEY.RIGHT) {
       walker.speedX = .1;
     } else if (event.which === KEY.UP) {
-      walker.speedY = -.1;
+      walker.speedY = -10;
     } else if (event.which === KEY.DOWN) {
       walker.speedY = .1;
     }
@@ -88,6 +88,7 @@ function runProgram() {
     $("#walker").css({
       "left": gameItem.positionX + "px",
       "top": gameItem.positionY + "px"
+
     });
   }
   function wallCollision(){
