@@ -18,9 +18,9 @@ function runProgram() {
   }
   // Game Item Objects
   var walker = {
-    positionX: 0,
+    x: 50,
     speedX: 0,
-    positionY: 0,
+    y: 50,
     speedY: 0
   }
 
@@ -38,75 +38,75 @@ function runProgram() {
   On each "tick" of the timer, a new frame is dynamically drawn using JavaScript
   by calling this function and executing the code inside.
   */
-  function newFrame() {
-    repositionGameItem(walker);
-    redrawGameItem(walker);
-    wallCollision(walker);
+  // Function to handle "keydown" events to control the walker movement
+function handleKeyDown(event) {
+  if (event.key === "ArrowUp") {
+    walker.speedY = -5;  // Move up
+  } else if (event.key === "ArrowDown") {
+    walker.speedY = 5;   // Move down
+  } else if (event.key === "ArrowLeft") {
+    walker.speedX = -5;  // Move left
+  } else if (event.key === "ArrowRight") {
+    walker.speedX = 5;   // Move right
+  }
+}
 
-    requestAnimationFrame(newFrame);
+// Function to handle "keyup" events to stop the walker movement
+function handleKeyUp(event) {
+  if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+    walker.speedY = 0;   // Stop vertical movement
+  } 
+  if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    walker.speedX = 0;   // Stop horizontal movement
   }
-  newFrame();
+}
 
-  /* 
-  Called in response to events.
-  */
-  function handleKeyDown(event) {
-    if (event.which === KEY.LEFT) {
-      walker.speedX = -10;
-    } else if (event.which === KEY.RIGHT) {
-      walker.speedX = .1;
-    } else if (event.which === KEY.UP) {
-      walker.speedY = -10;
-    } else if (event.which === KEY.DOWN) {
-      walker.speedY = .1;
-    }
-  }
-  function handleKeyUp(event) {
-    if (event.which === KEY.LEFT) {
-      walker.speedX = 0;
-    }
-    else if (event.which === KEY.UP) {
-      walker.speedY = 0;
-    }
-    else if (event.which === KEY.RIGHT) {
-      walker.speedX = 0;
-    }
-    else if (event.which === KEY.DOWN) {
-      walker.speedY = 0;
-    }
+// Register event listeners for "keydown" and "keyup"
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
+
+// The newFrame function is responsible for updating and redrawing the walker
+function newFrame() {
+  // Update walker's position based on its speed
+  walker.x += walker.speedX;
+  walker.y += walker.speedY;
+
+  // Ensure the walker stays within the board boundaries
+  wallCollision();
+
+  // Redraw the walker at the new position
+  repositionGameItem();
+  redrawGameItem();
+}
+
+// Function to check for boundary collisions (from TODO 8)
+function wallCollision() {
+  let boardWidth = $("#board").width();
+  let boardHeight = $("#board").height();
+
+  if (walker.x < 0) {
+    walker.x = 0;
+  } else if (walker.x > boardWidth) {
+    walker.x = boardWidth;
   }
 
+  if (walker.y < 0) {
+    walker.y = 0;
+  } else if (walker.y > boardHeight) {
+    walker.y = boardHeight;
+  }
+}
 
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////// HELPER FUNCTIONS ////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-  function repositionGameItem(gameItem) {
-    gameItem.positionX += gameItem.speedX;
-    gameItem.positionY += gameItem.speedY;
-  }
-  function redrawGameItem(gameItem) {
-    $("#walker").css({
-      "left": gameItem.positionX + "px",
-      "top": gameItem.positionY + "px"
+// Example of repositioning and redrawing the game item (this should already be implemented in your code)
+function repositionGameItem() {
+  // Update walker's position on the screen
+  $("#walker").css({ left: walker.x, top: walker.y });
+}
 
-    });
-  }
-  function wallCollision(){
-    const boardWidth = $("#board").width();
-    const boardHeight = $("#board").height();
-    if (walker.speedX < 0) {
-        walker.speedX = 0;
-    }
-    if (walker.speedX > boardWidth) {
-        walker.speedX = boardWidth; 
-    }
-    if (walker.speedY < 0) {
-        walker.speedY = 0; 
-    }
-    if (walker.speedY > boardHeight) {
-        walker.speedY = boardHeight;
-    }
-  }
+function redrawGameItem() {
+  // This would be used to redraw or refresh the walker
+  // It's useful if you need to animate or do additional rendering
+}
 
   function endGame() {
     // stop the interval timer
